@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Controller
@@ -30,6 +31,6 @@ public class ResultController {
     public byte[] test(@PathVariable("filename") String filename) {
         Map<String,String> results = resultsHolder.get(filename);
 
-        return results.get("result").getBytes();
+        return results.get("result").getBytes(StandardCharsets.UTF_8);
     }
 }
