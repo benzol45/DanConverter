@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+    <a href="/convert">back</a>
+    <br>
+    <h1>Result file</h1>
+    <a th:href="@{result/{filename}(filename=${filename})}">Download</a>
+    <br>
+    <br>
+    <h1>Errors</h1>
+    <div th:text="${error}">error</div>
+    <br>
+    <br>
+    <h1>Problems</h1>
+    <div th:text="${problem}">problems</div>
+    <br>
+</body>
+</html>

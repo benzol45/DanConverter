@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Converter</title>
+</head>
+<body>
+    <h1>Converter</h1>
+    <form method="POST" action="/convert" enctype="multipart/form-data">
+        <label for="file">Select a file to upload</label>
+        <input type="file" name="file" id="file" accept=".xlsx"/>
+        <br>
+        <br>
+        <label for="company_name">Company name</label>
+        <input type="text" name="company_name" id="company_name"/>
+        <br>
+        <br>
+        <label for="company_inn">Company INN</label>
+        <input type="text" name="company_inn" id="company_inn"/>
+        <br>
+        <br>
+        <input type="submit" value="Convert"/>
+        <br>
+        <br>
+    </form>
+</body>
+</html>
