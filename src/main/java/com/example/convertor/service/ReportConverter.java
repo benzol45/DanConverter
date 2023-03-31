@@ -105,8 +105,9 @@ public class ReportConverter {
 
         StringBuilder problems = new StringBuilder();
         for (PersonResult personResult: personResultList) {
-            if (findLearnProgramId(personResult.getStudyingTitle())==23) {
-                problems.append("row " + personResult.getNumber() + " : " + personResult.getSurname() + " " + personResult.getName() + " " + personResult.getFatherName() + "\n");
+            if (incorrectLearnProgramId(personResult.getStudyingTitle())) {
+                problems.append("row " + personResult.getNumber() + " programId = " + findLearnProgramId(personResult.getStudyingTitle()) + " : "
+                        + personResult.getSurname() + " " + personResult.getName() + " " + personResult.getFatherName() + "\n");
                 continue;
             }
 
@@ -142,6 +143,13 @@ public class ReportConverter {
                 .map(e->e.getId())
                 .findAny()
                 .orElseThrow(()->new IllegalStateException("Can't find Learn Program by title " + title));
+    }
+
+    private boolean incorrectLearnProgramId(String studyingTitle) {
+        List<Integer> incorrectCodes = List.of(23,27,28);
+
+        Integer learnProgramId = findLearnProgramId(studyingTitle);
+        return incorrectCodes.contains(learnProgramId);
     }
 
 
