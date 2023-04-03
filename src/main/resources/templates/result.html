@@ -16,7 +16,9 @@
     <br>
     <br>
     <h1>Problems</h1>
-    <div th:text="${problem}">problems</div>
+    <div th:each="problem: ${problems}">
+        <p th:text="'Строка ' + ${problem.getRow()} + ': ' + ${problem.getPerson()} + ' - (' + ${problem.getCourseCode()} + ') ' + ${problem.getCourseName()}"/>
+    </div>
     <br>
 </body>
 </html>

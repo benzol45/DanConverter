@@ -2,6 +2,7 @@ package com.example.convertor.service;
 
 import com.example.convertor.entity.LearnProgram;
 import com.example.convertor.entity.PersonResult;
+import com.example.convertor.entity.Problem;
 import com.example.convertor.entity.ResultsHolder;
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.ss.usermodel.*;
@@ -103,11 +104,16 @@ public class ReportConverter {
         sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
         sb.append("<RegistrySet xsi:noNamespaceSchemaLocation=\"schema.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n");
 
-        StringBuilder problems = new StringBuilder();
+        List<Problem> problems = new ArrayList<>();
         for (PersonResult personResult: personResultList) {
             if (incorrectLearnProgramId(personResult.getStudyingTitle())) {
-                problems.append("row " + personResult.getNumber() + " programId = " + findLearnProgramId(personResult.getStudyingTitle()) + " : "
-                        + personResult.getSurname() + " " + personResult.getName() + " " + personResult.getFatherName() + "\n");
+                problems.add(new Problem(
+                                        personResult.getNumber(),
+                                        personResult.getSurname() + " " + personResult.getName() + " " + personResult.getFatherName(),
+                                        findLearnProgramId(personResult.getStudyingTitle()),
+                                        personResult.getStudyingTitle()));
+                //problems.append("row " + personResult.getNumber() + " programId = " + findLearnProgramId(personResult.getStudyingTitle()) + " : "
+                //        + personResult.getSurname() + " " + personResult.getName() + " " + personResult.getFatherName() + "\n");
                 continue;
             }
 
@@ -134,7 +140,9 @@ public class ReportConverter {
         }
         sb.append("</RegistrySet>");
 
-        return Map.of("result",sb.toString(),"problem",problems.toString());
+        StringBuilder problemsString = new StringBuilder();
+        problems.forEach(problem -> problemsString.append(problem.serialize()).append("|"));
+        return Map.of("result",sb.toString(),"problem",problemsString.toString());
     }
 
     private Integer findLearnProgramId(String title) {
@@ -151,25 +159,4 @@ public class ReportConverter {
         Integer learnProgramId = findLearnProgramId(studyingTitle);
         return incorrectCodes.contains(learnProgramId);
     }
-
-
-
-
-//    String filePath = "C:\\den\\210949_Елисеева — копия.xlsx";
-//    ReportConverter reportConverter = new ReportConverter(filePath,
-//            "Общество с ограниченной ответственностью «ЭсАрДжи. Учебный центр»",
-//            "3444171684");
-//
-//        try {
-//        reportConverter.readData();
-//    } catch (IOException e) {
-//        throw new IllegalStateException(e);
-//    }
-//
-//    String report = reportConverter.generateXML();
-//        try {
-//        Files.writeString(Path.of(filePath.replaceAll("\\.xlsx",".xml")),report);
-//    } catch (IOException e) {
-//        throw new IllegalStateException(e);
-//    }
 }
