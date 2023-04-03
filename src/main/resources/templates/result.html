@@ -7,7 +7,7 @@
 <body>
     <a href="/convert">back</a>
     <br>
-    <h1>Result file</h1>
+    <h1>Result file <div th:text="${filename}">filename</div></h1>
     <a th:href="@{result/{filename}(filename=${filename})}">Download</a>
     <br>
     <br>
