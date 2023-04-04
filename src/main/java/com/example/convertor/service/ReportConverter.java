@@ -162,7 +162,7 @@ public class ReportConverter {
     }
 
     private boolean incorrectLearnProgramId(String studyingTitle) {
-        List<Integer> incorrectCodes = List.of(23,27,28);
+        List<Integer> incorrectCodes = List.of();
 
         Integer learnProgramId = findLearnProgramId(studyingTitle);
         return incorrectCodes.contains(learnProgramId);
