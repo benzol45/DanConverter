@@ -142,7 +142,7 @@ public class ReportConverter {
                 sb.append("    <Test isPassed=\"true\" learnProgramId=\"" + findLearnProgramId(personResult.getStudyingTitle()) + "\">\n");
                     sb.append("      <Date>" + dateFormat.format(personResult.getCheckDate())+"T01:00:00" + "</Date>\n");
                     sb.append("      <ProtocolNumber>" + personResult.getProtocolNumber() + "</ProtocolNumber>\n");
-                    sb.append("      <LearnProgramTitle>" + personResult.getStudyingTitle() + "</LearnProgramTitle>\n");
+                    sb.append("      <LearnProgramTitle>" + getLearnProgramName(personResult.getStudyingTitle()) + "</LearnProgramTitle>\n");
                 sb.append("    </Test>\n");
             sb.append("  </RegistryRecord>\n");
         }
@@ -154,9 +154,16 @@ public class ReportConverter {
     }
 
     private Integer findLearnProgramId(String title) {
+        return findLearnProgramByTitle(title).getId();
+    }
+
+    private String getLearnProgramName(String title) {
+        return findLearnProgramByTitle(title).getTitle();
+    }
+
+    private LearnProgram findLearnProgramByTitle(String title) {
         return Arrays.stream(LearnProgram.values())
                 .filter(e->title.toLowerCase().contains(e.getPatternWord().toLowerCase()))
-                .map(e->e.getId())
                 .findAny()
                 .orElseThrow(()->new IllegalStateException("Can't find Learn Program by title " + title));
     }
