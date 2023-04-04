@@ -83,10 +83,18 @@ public class ReportConverter {
                 row.getCell(4).getStringCellValue().trim(),
                 row.getCell(5).getStringCellValue().trim(),
                 row.getCell(6).getStringCellValue().trim(),
-                row.getCell(7).getNumericCellValue(),
+                getINN(row.getCell(7)),
                 row.getCell(8).getStringCellValue().trim(),
                 row.getCell(9).getDateCellValue(),
                 getProtocolNumber(row.getCell(10)));
+    }
+
+    private Double getINN(Cell cell) {
+        if (cell.getCellType()== CellType.NUMERIC) {
+            return cell.getNumericCellValue();
+        } else {
+            return Double.parseDouble(cell.getStringCellValue().trim());
+        }
     }
 
     private String getProtocolNumber(Cell cell) {
