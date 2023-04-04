@@ -56,7 +56,9 @@ public class ReportConverter {
         for (Row row : sheet) {
             //for (Cell cell : row) {  }
             Cell cell = row.getCell(1);
-            if (cell==null) {
+            if (cell==null
+                    || cell.getCellType()== CellType.BLANK
+                    || (cell.getCellType()== CellType.STRING && cell.getStringCellValue().isBlank())) {
                 //Дальше пустые строки ?
                 break;
             }
@@ -75,6 +77,7 @@ public class ReportConverter {
     }
 
     private PersonResult mapRowToPersonResult(Row row, int rowNumber) {
+        //System.out.println(rowNumber);
         return new PersonResult(
                 rowNumber,
                 row.getCell(1).getStringCellValue().trim(),
